@@ -1,0 +1,151 @@
+################################################################################
+#                                GENERAL SETTINGS                              #
+################################################################################
+
+##################################################
+#                 XDG Directories                #
+##################################################
+
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_BIN_HOME="$HOME/.local/bin"
+
+##################################################
+#                ZSH Configuration               #
+##################################################
+
+export PAGER="less"
+export EDITOR="nvim"
+
+export LESSHISTFILE=-
+export LESS="-RFX"
+
+##################################################
+#             Pure Theme Configuration           #
+##################################################
+
+export PURE_GIT_PULL=0
+
+##################################################
+#                Zit Configuration               #
+##################################################
+
+export ZIT_MODULES_HOME="$XDG_DATA_HOME/zsh/plugins"
+
+##################################################
+#             Homebrew Configuration             #
+##################################################
+
+export HOMEBREW_PREFIX="/opt/homebrew"
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+export HOMEBREW_REPOSITORY="/opt/homebrew"
+
+export HOMEBREW_NO_INSECURE_REDIRECT=1
+export HOMEBREW_NO_ENV_HINTS=1
+export HOMEBREW_NO_ANALYTICS=1
+
+################################################################################
+#                                 GENERAL TOOLS                                #
+################################################################################
+
+##################################################
+#                Bat Integration                 #
+##################################################
+
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+##################################################
+#               GPG Configuration                #
+##################################################
+
+export GNUPGHOME="$HOME/.gpg"
+export GPG_TTY=$(tty)
+
+##################################################
+#               SSH Configuration                #
+##################################################
+
+export SSH_HOME="$HOME/.ssh"
+export SSH_AUTH_SOCK="~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+##################################################
+#               FZF Configuration                #
+##################################################
+
+export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --follow"
+export FZF_DEFAULT_OPTS="--height 40% --border --ansi --reverse \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+
+export FZF_COMPLETION_TRIGGER=""
+
+################################################################################
+#                                DEVELOPER TOOLS                               #
+################################################################################
+
+##################################################
+#               Git Configuration                #
+##################################################
+
+export GIT_CONFIG_NOSYSTEM=1
+export GIT_CONFIG_GLOBAL="$XDG_CONFIG_HOME/git/gitconfig"
+
+##################################################
+#              Docker Configuration              #
+##################################################
+
+export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
+export DOCKER_DATA_ROOT="$XDG_DATA_HOME/docker"
+
+##################################################
+#              Python Configuration              #
+##################################################
+
+export JUPYTER_CONFIG_DIR="$XDG_DATA_HOME/jupyter"
+export IPYTHONDIR="$JUPYTER_CONFIG_DIR/ipython"
+export MPLCONFIGDIR="$XDG_STATE_HOME/matplotlib"
+
+export CONDA_AUTO_ACTIVATE_BASE="false"
+export CONDA_ENVS_DIRS="$XDG_DATA_HOME/python/envs"
+
+##################################################
+#               Node Configuration               #
+##################################################
+
+export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
+
+export FNM_DIR="$XDG_DATA_HOME/node"
+export FNM_MULTISHELL_PATH="$FNM_DIR/versions"
+export FNM_COREPACK_ENABLED="true"
+
+##################################################
+#                 Go Configuration               #
+##################################################
+
+export GOPATH="$XDG_DATA_HOME/go"
+
+##################################################
+#               Rust Configuration               #
+##################################################
+
+export CARGO_HOME="$XDG_DATA_HOME/rust/cargo"
+export RUSTUP_HOME="$XDG_DATA_HOME/rust/rustup"
+
+################################################################################
+#                               PATH CONFIGURATION                             #
+################################################################################
+
+PATH="/bin"
+PATH="/sbin:$PATH"
+PATH="/usr/bin:$PATH"
+PATH="/usr/sbin:$PATH"
+PATH="/usr/local/bin:$PATH"
+PATH="$HOMEBREW_PREFIX/bin:$PATH"
+PATH="$HOMEBREW_PREFIX/sbin:$PATH"
+PATH="$XDG_BIN_HOME:$PATH"
+PATH="$HOME/.dotfiles/bin:$PATH"
+PATH="$FNM_MULTISHELL_PATH/bin:$PATH"
+PATH="$CARGO_HOME/bin:$PATH"
+export PATH

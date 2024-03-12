@@ -1,0 +1,182 @@
+################################################################################
+#                                GENERAL SETTINGS                              #
+################################################################################
+
+# if not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+
+##################################################
+#                 ZSH Keybindings                #
+##################################################
+
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word
+bindkey '^[[A' history-search-backward
+bindkey '^[[B' history-search-forward
+
+##################################################
+#                 ZSH Configuration              #
+##################################################
+
+# setting up history options
+HISTSIZE=500
+SAVEHIST=500
+HISTFILE="$XDG_DATA_HOME/zsh/history"
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+# enable zprof for zsh profiling
+zmodload zsh/zprof
+
+# start up tmux session by default
+if [ -z "$TMUX" ]; then
+    tmux -2 new-session -A -s home
+fi
+
+##################################################
+#                  ZSH Completions               #
+##################################################
+
+autoload -Uz compinit; compinit -d "$XDG_DATA_HOME/zsh/zcompdump"
+
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu select _extensions _complete _approximate
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+
+################################################################################
+#                               Developer Tools                                #
+################################################################################
+
+##################################################
+#                FZF Configuration               #
+##################################################
+
+_fzf_compgen_path() {
+    fd --hidden --follow . "$1"
+}
+
+_fzf_compgen_dir() {
+    fd --type d --hidden --follow . "$1"
+}
+
+_fzf_compgen_file() {
+    fd --type f --hidden --follow . "$1"
+}
+
+
+_fzf_comprun() {
+    local command=$1
+        shift
+
+    case "$command" in
+        cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
+        export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
+        ssh)          fzf --preview 'dig {}'                   "$@" ;;
+        nv)           fzf --preview 'if [ -d {} ]; then tree -C {}; else bat -n --color=always {} | head -200; fi' "$@" ;;
+        oo)           fzf --preview 'if [ -d {} ]; then tree -C {}; elif [[ {} == *.pdf ]]; then pdftotext {} - | head -200; else bat -n --color=always {} | head -200; fi' "$@" ;;
+        *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
+    esac
+}
+
+##################################################
+#              Python Configuration              #
+##################################################
+
+# lazy load conda && get rid of annoying ~/.conda
+function conda() {
+    # check if the known environment variable is set
+    if [ -z "$CONDA_EXE" ]; then
+        eval "$($HOMEBREW_PREFIX/Caskroom/miniconda/base/bin/conda 'shell.zsh' 'hook' 2>/dev/null)"
+    fi
+
+    local cmd="${1-__missing__}"
+    case "$cmd" in
+        (activate | deactivate) __conda_activate "$@" ;;
+        (install | update | upgrade | remove | uninstall) 
+            __conda_exe "$@" || return
+            __conda_reactivate ;;
+        (*) 
+            __conda_exe "$@" ;;
+    esac
+
+    # clean up unnecessary conda artifacts
+    rm -rf "$HOME/.conda"
+}
+
+##################################################
+#             Utilities Configuration            #
+##################################################
+
+# more versatile open command
+function open() {
+    if [ $# -eq 0 ]; then
+        command open ./
+    else
+        command open "$@"
+    fi
+}
+
+
+################################################################################
+#                             Configure ZSH Aliases                            #
+################################################################################
+
+alias cat="bat"
+
+alias ls="eza -g --icons='always' --ignore-glob '*.git'"
+alias la="eza -ag --icons='always' --ignore-glob '*.git'"
+alias ll="eza -log --icons='always' --time-style='long-iso' --ignore-glob '*.git'"
+alias l="eza -laog --icons='always' --time-style='long-iso' --ignore-glob '*.git'"
+
+alias so="source"
+alias cl="clear"
+alias oo="open"
+alias nv="nvim"
+
+alias md="mkdir -p"
+alias rd="rmdir"
+
+alias -- -="cd -"
+alias -g ..="cd ../"
+alias -g ...="cd ../.."
+alias -g ....="cd ../../.."
+
+alias th="tmux -2 new-session -A -s home"
+alias coffee="caffeinate -disu"
+alias leaks="leaks -noContent -atExit --"
+
+alias top="btop"
+alias ff="fastfetch"
+
+alias update="brew update; brew upgrade; zit-upgrade; pipx upgrade-all"
+
+################################################################################
+#                              Zit Plugin Manager                              #
+################################################################################
+
+if [[ ! -r "$ZIT_MODULES_HOME/zit/zit.zsh" ]]; then
+    git clone --depth 1 -- "https://github.com/brycekwon/zit.git" "$ZIT_MODULES_HOME/zit"
+fi
+source "$ZIT_MODULES_HOME/zit/zit.zsh"
+
+zit-install "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+zit-load "zsh-syntax-highlighting" "zsh-syntax-highlighting.plugin.zsh"
+
+zit-install "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions.git"
+zit-load "zsh-autosuggestions" "zsh-autosuggestions.plugin.zsh"
+
+zit-install "fzf-completion" "https://gist.github.com/26f88e81e94467c5cae2df7f43608c8c"
+zit-load "fzf-completion" "fzf-completions.zsh"
+
+zit-install "pure" "https://github.com/sindresorhus/pure"
+zit-load "pure" "async.zsh"
+zit-load "pure" "pure.zsh"
+
+clear

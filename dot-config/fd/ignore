@@ -1,0 +1,44 @@
+# MacOS #
+.DS_Store
+.localized
+.AppleDouble
+.LSOverride
+
+Icon
+
+
+._*
+
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Path Specific #
+/.cache/
+/.colima/
+/.local/
+/.conda/
+/.docker/
+/.vscode-oss/
+/Pictures/
+/Music/
+/Movies/
+/Library/
+/.Trash/
+
+# Programming #
+node_modules/
+venv/
+.git/
+
+_archived

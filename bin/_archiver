@@ -1,0 +1,159 @@
+#!/usr/bin/env bash
+
+## general purpose archiver tool
+## version: 0.1.0
+## author: Bryce Kwon <contact@brycekwon.dev>
+
+
+CRYPT_MODE=""
+RENAME_MODE=""
+PASSWORD=""
+INPUT=""
+OUTPUT=""
+
+function __print_help() {
+    echo "$(basename $0) [-e|-d] PASSWORD -i INPUT"
+    echo "     --encrypt|-e    Toggle encryption mode"
+    echo "     --decrypt|-d    Toggle decryption mode"
+    echo "     --input|-i      Specify input directory or file"
+    echo "     --output|-o     Specify output directory or file"
+}
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --encrypt|-e)
+           if [[ ! -z "${MODE}" ]] ; then
+               echo "Error: you can only select 1 mode"
+               exit 1
+           elif [[ -z "$2" ]]; then
+               echo "Error: please provide the password for encryption"
+               exit 1
+           fi
+           CRYPT_MODE="e"
+           PASSWORD="$2"
+           shift 2
+           ;;
+        --decrypt|-d)
+           if [[ ! -z "${MODE}" ]] ; then
+               echo "Error: you can only select 1 mode"
+               exit 1
+           elif [[ -z "$2" ]]; then
+               echo "Error: please provide the password for decryption"
+               exit 1
+           fi
+           CRYPT_MODE="d"
+           PASSWORD="$2"
+           shift 2
+           ;;
+        --rename|-r)
+            if [[ -z "$2" ]]; then
+                echo "Error: please specify the renaming mode (SHA|UUID)"
+                exit 1
+            elif [ ! "$2" == "SHA" ] && [ ! "$2" == "UUID" ]; then
+                echo "Error: currently only SHA or UUID is supported"
+                exit 1
+            fi
+            RENAME_MODE="$2"
+            shift 2
+            ;;
+        # --parity|-p)
+        #     PARITY_FLAG=1
+        #     shift 2
+        #     ;;
+        # --compress|-c)
+        #     COMPRESS_FLAG=1
+        #     shift 2
+        #     ;;
+        --input|-i)
+            if [[ -z "$2" ]]; then
+                echo "Error: please specify a directory or file"
+                exit 1
+            elif [ ! -d "$2" ] && [ ! -f "$2" ]; then
+                echo "Error: directory or file does not exist"
+                exit 1
+            fi
+            INPUT=$(echo "$2" | sed 's:/*$::')
+            shift 2
+            ;;
+        # --output|-o)
+        #     if [[ -z "$2" ]]; then
+        #         echo "Error: please specify a directory or file"
+        #         exit 1
+        #     fi
+        #     OUTPUT="$2"
+        #     shift 2
+        #     ;;
+        --help|-h)
+            __print_help
+            exit 0
+            ;;
+        *)
+            echo "Error: unknown option $1"
+            exit 1
+            ;;
+    esac
+done
+
+if [[ -z "$INPUT" ]]; then
+    echo "Error: an input directory or file must be provided"
+    exit 1
+fi
+
+if [[ "$RENAME_MODE" == "UUID" ]]; then
+    check='^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\.[^.]+$'
+    find "$INPUT" -type f ! -name ".DS_Store" ! -name "*.gpg" | while read file; do
+        if [[ $(basename $file) =~ $check ]]; then
+            continue
+        fi
+        uuid="$(dirname $file)/$(uuidgen).${file##*.}"
+        mv "$file" "$uuid"
+        echo "Status: renamed $(basename $file) to $(basename $uuid)"
+    done
+elif [[ "$RENAME_MODE" == "SHA" ]]; then
+    check='^[0-9A-Fa-f]{64}\.[^.]+$'
+    find "$INPUT" -type f ! -name ".DS_Store" ! -name "*.gpg" | while read file; do
+        if [[ $(basename $file) =~ $check ]]; then
+            continue
+        fi
+        sha="$(dirname $file)/$(shasum -a 256 $file | awk '{print $1}' | tr '[:lower:]' '[:upper:]').${file##*.}"
+        mv "$file" "$sha"
+        echo "Status: renamed $(basename $file) to $(basename $sha)"
+    done
+fi
+
+if [[ "$CRYPT_MODE" == "e" ]]; then
+    find "$INPUT" -type f ! -name ".DS_Store" ! -name "*.gpg" | while read file; do
+        echo "Status: encrypting $file..."
+        status=$(gpg -q --batch --passphrase "$PASSWORD" -c "$file" 2>&1)
+        if [ $? -ne 0 ]; then
+            echo "    $status"
+            exit 1
+        fi
+        rm "$file"
+    done
+    echo "Status: Encryption of $INPUT has been completed"
+    exit 0
+elif [[ "$CRYPT_MODE" == "d" ]]; then
+    find "$INPUT" -type f -name "*.gpg" | while read file; do
+        echo "Status: decrypting $file..."
+        status=$(gpg -q --batch --passphrase "$PASSWORD" -o "${file%.gpg}" -d "$file" 2>&1)
+        if [ $? -ne 0 ]; then
+            echo "    $status"
+            exit 1
+        fi
+        rm "$file"
+    done
+    echo "Status: Decryption of $INPUT has been completed"
+    exit 0
+fi
+
+echo "$CRYPT_MODE $RENAME_MODE $PASSWORD $INPUT $OUTPUT"
+
+
+# add all modes functionality
+# add case option for renamining
+# add more robust and feature rich options for naming
+# add integration with pinentry for passwords
+# use env var to specify password command to use
+# finish help method
+# ask for confirmation prior to running any changes
