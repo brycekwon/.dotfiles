@@ -1,0 +1,165 @@
+# Neovim
+
+MAP LEADER = " "
+
+## Core Keybinds
+
+- h         move left 1 character
+- l         move right 1 character
+- k         move up 1 line
+- j         move down 1 line
+
+- w         move to beginning of next word
+- e         move to end of next word
+- b         move to beginning of previous word
+
+- [[        move to top of file
+- ]]        move to bottom of file
+
+- ;         move to previous paragraph
+- '         move to next paragraph
+
+- ,         move to beginning of line
+- .         move to end of line
+
+- v         enter VISUAL MODE
+- V         enter VISUAL MODE and highlight line
+
+- i         enter INSERT MODE
+- I         enter INSERT MODE at beginning of line
+- a         enter INSERT MODE appending
+- A         enter INSERT MODE appending at end of line
+- o         enter INSERT MODE on new line below
+- O         enter INSERT MODE on new line above
+
+- dd        delete line
+- x         delete character
+
+- y         yank
+- Y         yank line
+- p         paste clipboard before cursor
+- P         paste clipboard after cursor
+- r         replace character
+
+- =         autoformat
+- >>        increase indent
+- <<        decrease indent
+
+- /         enter COMMAND MODE for search
+
+- C-u       undo
+- C-r       redo
+
+- u         (while highlighted) lowercase highlighted characters
+- U         (while highlighted) uppercase highlighted characters
+- K         (while highlighted) moves highlighted block up 1 line
+- J         (while highlighted) moves highlighted block down 1 line
+
+- C-`       go to previous file
+- C-i       go to next in jumplist
+- C-o       go to previous in jumplist
+
+- <leader>ww    save current file
+- <leader>wa    save all files
+- <leader>qq    quit current buffer
+- <leader>qa    quite all buffers
+- <leader>wqa   quite and save all files
+
+- <leader>to    create new tab
+- <leader>tx    close current tab
+- <leader>t#    go to tab #
+
+- <leader>s-    split window vertically
+- <leader>s=    split window horizontally
+- <leader>sx    close current window
+
+## Plugin Keybinds
+
+### nvim-tree
+
+- <leader>e     toggle nvim-tree
+
+### undotree
+
+- <leader>u     toggle undotree
+
+### nvim-telescope
+
+- <leader>ff    open find files search
+- <leader>fg    open live grep search
+
+### comments
+
+- gc        (while highlighted) toggles comments for highlighted block
+- gb        (while highlighted) toggles block comments for highlighted block
+
+### harpoon
+
+- <leader>a     add current file to harpoon list
+- <leader>z     toggle harpoon list ui
+- <leader>#     move to saved file #
+
+### nvim-lsp
+
+- K         (while on lsp symbol) finds information about symbol
+- gd        (while on lsp symbol) jumps to symbol definition
+- gD        (while on lsp symbol) jump to symbol declaration
+- gi        (while on lsp symbol) list all implementations for symbol
+- gr        (while on lsp symbol) list all references for symbol
+- gl        show diagnostics in floating window
+- [d        jump to previous diagnostic
+- ]d        jump to next diagnostic
+
+### tmux-navigator
+
+- C-h       move to left window
+- C-l       move to right window
+- C-k       move to top window
+- C-j       move to bottom window
+
+## Core Commands
+
+- :h                                open help
+- :checkhealth                      check health of neovim modules
+- :s/[SOURCE]/[REPLACE]/[TAG]       find and replace
+- :so                               source file
+
+## Plugin Commands
+
+- :Lazy                             open Lazy Package Manager menu
+- :Mason                            open Mason LSP Manager menu
+- :TSInstall [LANGUAGE]             install tree-sitter parser for language
+
+# Tmux
+
+MAPLEADER = "C-a"
+
+## Core Keybinds
+
+- C-h               switch to left window
+- C-l               switch to right window
+- C-k               switch to top window
+- C-j               switch to bottom window
+
+- C-d               detach tmux session
+- C-s               choose tmux session
+- C-z               enter COMMAND MODE
+
+- <leader>C-c       create new window
+- <leader>C-q       kill current window
+- <leader>C-s       choose window
+- <leader>,         go to previous window
+- <leader>.         go to next window
+
+- <leader>=         split window horizontally (new pane)
+- <leader>-         split window vertically (new pane)
+
+- <leader>h         resize window left
+- <leader>l         resize window right
+- <leader>k         resize window up
+- <leader>j         resize window down
+
+## Plugin Keybinds
+
+- <leader>o         open tmux session manager
+- <leader>C-f       open fzf session manager

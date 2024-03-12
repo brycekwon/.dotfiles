@@ -1,0 +1,138 @@
+################################################################################
+# File: .dotfiles/zsh/zprofile
+# Author: Bryce Kwon
+# Date: 2024-03-12
+# Version: 1.0.0
+################################################################################
+
+
+################################################################################
+#                               GENERAL SETTINGS                               #
+################################################################################
+
+##################################################
+#              XDG Base Directories              #
+##################################################
+
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_DATA_HOME="$HOME/.local/share"
+
+##################################################
+#                Session History                 #
+##################################################
+
+# disables command history for all shell sessions
+export SHELL_SESSIONS_DISABLE=1
+
+# disables search history for `less`
+export LESSHISTFILE=-
+
+##################################################
+#             Homebrew Configuration             #
+##################################################
+
+# sources the `homebrew` environment
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+export HOMEBREW_NO_ENV_HINTS=false
+
+##################################################
+#               SSH Configuration                #
+##################################################
+
+# sets `ssh authentication socket` to `1password`
+export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+##################################################
+#               FZF Configuration                #
+##################################################
+
+# set fzf default command
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+export FZF_DEFAULT_COMMAND="fd --hidden . $1"
+export FZF_CTRL_T_COMMAND="fd --hidden . $1"
+
+_fzf_compgen_path() {
+  fd --hidden . "$1"
+}
+
+_fzf_compgen_dir() {
+  fd --type d --hidden . "$1"
+}
+
+# auto-completion
+source "/opt/homebrew/opt/fzf/shell/completion.zsh"
+
+# key bindings
+source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+
+
+##################################################
+#               NPM Configuration                #
+##################################################
+
+# set npm cache location
+export npm_config_cache="$XDG_CACHE_HOME/npm"
+
+
+################################################################################
+#                             PROGRAMMING LANGUAGE                             #
+################################################################################
+
+##################################################
+#               Rust Configuration               #
+##################################################
+
+# sets default directory to store `rustup`
+export RUSTUP_HOME="$XDG_DATA_HOME/rust/rustup"
+
+# sets default directory to store `cargo`
+export CARGO_HOME="$XDG_DATA_HOME/rust/cargo"
+
+# sources `rust` enviornment
+source "$CARGO_HOME/env"
+
+##################################################
+#       Node Version Manager Configuration       #
+##################################################
+
+# sets default directory to store `nvm`
+export NVM_DIR="$XDG_DATA_HOME/nvm"
+
+# sources `nvm` enviornment
+source "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
+
+##################################################
+#              Conda Configuration               #
+##################################################
+
+export CONDA_AUTO_ACTIVATE_BASE=false
+
+
+################################################################################
+#                                PATH SETTINGS                                 #
+################################################################################
+
+# primary paths
+PATH="/usr/bin"
+PATH="/usr/sbin:$PATH"
+PATH="/bin:$PATH"
+PATH="/sbin:$PATH"
+PATH="/usr/local/bin:$PATH"
+PATH="/opt/homebrew/bin:$PATH"
+PATH="/opt/homebrew/sbin:$PATH"
+PATH="/System/Cryptexes/App/usr/bin:$PATH"
+PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:$PATH"
+PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:$PATH"
+PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:$PATH"
+
+# secondary paths
+PATH="/opt/homebrew/opt/fzf/bin:$PATH"                              # fzf path
+PATH="/opt/homebrew/Caskroom/miniconda/base/condabin:$PATH"         # conda path
+PATH="/Users/brycekwon/.local/share/rust/cargo/bin:$PATH"           # rust path
+

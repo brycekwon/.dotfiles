@@ -1,0 +1,97 @@
+tap "homebrew/bundle"
+# Bourne-Again SHell, a UNIX command interpreter
+brew "bash"
+# Deduplicating archiver with compression and authenticated encryption
+brew "borgbackup"
+# Simple wrapper script for the Borg backup software
+brew "borgmatic"
+# Perl lib for reading and writing EXIF metadata
+brew "exiftool"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# GNU compiler collection
+brew "gcc"
+# Play, record, convert, and stream audio and video
+brew "ffmpeg"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# Distributed revision control system
+brew "git"
+# GNU Pretty Good Privacy (PGP) package
+brew "gnupg"
+# GNU grep, egrep and fgrep
+brew "grep"
+# Utility for directing compilation
+brew "make"
+# Fast, highly customisable system info script
+brew "neofetch"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
+# Platform built on V8 to build network applications
+brew "node"
+# Statically typed programming language for scientific computations
+brew "numbat"
+# Manage multiple Node.js versions
+brew "nvm"
+# Command-line Git information tool
+brew "onefetch"
+# OpenBSD freely-licensed SSH connectivity tools
+brew "openssh"
+# 7-Zip (high compression file archiver) implementation
+brew "p7zip"
+# Paste PNG into files
+brew "pngpaste"
+# Fast, disk space efficient package manager
+brew "pnpm"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Rust toolchain installer
+brew "rustup-init"
+# Terminal multiplexer
+brew "tmux"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Vi 'workalike' with many additional features
+brew "vim"
+# Internet file retriever
+brew "wget"
+# UNIX shell (command interpreter)
+brew "zsh"
+# Password manager that keeps all passwords secure behind one password
+cask "1password"
+# Command-line interface for 1Password
+cask "1password-cli"
+# GPU-accelerated terminal emulator
+cask "alacritty"
+# Application launcher and productivity software
+cask "alfred"
+# Web browser
+cask "firefox"
+# Free and open-source media player
+cask "iina"
+# Password manager app
+cask "keepassxc"
+# Tool to show what is persistently installed on the computer
+cask "knockknock"
+# Free cross-platform office suite, fresh version
+cask "libreoffice"
+# Host-based application firewall
+cask "little-snitch"
+# Minimal installer for conda
+cask "miniconda"
+# Verify system files structure, run miscellaneous maintenance and more
+cask "onyx"
+# Client for Proton Drive
+cask "proton-drive"
+# Bridges Proton Mail to email clients supporting IMAP and SMTP protocols
+cask "protonmail-bridge"
+# VPN client focusing on security
+cask "protonvpn"
+# Instant messaging application focusing on security
+cask "signal"
+# Customizable email client
+cask "thunderbird"
+# Virtual machines UI using QEMU
+cask "utm"
+# Application for generating TOTP and HOTP codes
+cask "yubico-authenticator"

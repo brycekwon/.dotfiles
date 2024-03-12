@@ -1,0 +1,34 @@
+################################################################################
+# File: .dotfiles/ssh/config
+# Author: Bryce Kwon
+# Date: 2024-03-12
+# Version: 1.0.0
+################################################################################
+
+
+Host github.com
+    User git
+    Hostname github.com
+    IdentityFile ~/.ssh/id_ed25519_git_access.pub
+    IdentitiesOnly yes
+
+Host gitlab.com
+    User git
+    Hostname gitlab.com
+    IdentityFile ~/.ssh/id_ed25519_git_access.pub
+    IdentitiesOnly yes
+
+Host codeberg.org
+    User git
+    Hostname codeberg.org
+    IdentityFile ~/.ssh/id_ed25519_git_access.pub
+    IdentitiesOnly yes
+
+Host borgbase.com
+    User borg
+    Hostname borgbase.com
+    IdentityFile ~/.ssh/id_ed25519_borgbase_access.pub
+    IdentitiesOnly yes
+
+Host *
+    IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"

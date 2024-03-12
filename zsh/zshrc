@@ -1,0 +1,62 @@
+################################################################################
+# File: .dotfiles/zsh/zshrc
+# Author: Bryce Kwon
+# Date: 2024-03-12
+# Version: 1.0.0
+################################################################################
+
+
+################################################################################
+#                              Oh-My-Zsh Settings                              #
+################################################################################
+
+# sets default directory to store `Oh-My-Zsh`
+export ZSH="$HOME/.omz"
+
+# sets default directory to store `Oh-My-Zsh comp dump`
+export ZSH_COMPDUMP="$ZSH_CACHE_DIR/zcompdump"
+
+# sets default Oh-My-Zsh theme
+ZSH_THEME="agnoster/agnoster"
+
+# enables Oh-My-Zsh auto updates
+zstyle ':omz:update' mode reminder
+
+# load Oh-My-Zsh plugins
+plugins=(zsh-syntax-highlighting zsh-autosuggestions colored-man-pages)
+
+# disable terminal title renaming
+DISABLE_AUTO_TITLE=true
+
+# execute program on terminal open
+source $ZSH/oh-my-zsh.sh
+
+# disable zsh history file
+unset HISTFILE
+
+
+################################################################################
+#                                Custom Aliases                                #
+################################################################################
+
+##################################################
+#                  Tmux Aliases                  #
+##################################################
+
+alias to="tmux -2 new -s "
+alias tk="tmux -2 kill-session -t "
+alias ta="tmux -2 attach -t "
+alias td="tmux -2 detach"
+alias tl="tmux -2 ls"
+
+##################################################
+#                Utility Aliases                 #
+##################################################
+
+alias so="source"
+alias cl="clear"
+alias nv="nvim"
+alias oo="open ./"
+
+alias nf="neofetch"
+alias of="onefetch"
