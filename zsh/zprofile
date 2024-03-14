@@ -85,17 +85,27 @@ export npm_config_cache="$XDG_CACHE_HOME/npm"
 ################################################################################
 
 ##################################################
+#               Haskell Configuration            #
+##################################################
+
+# set ghcup to use XDG file directory standard
+export GHCUP_USE_XDG_DIRS=true
+
+# set default directory to store `ghcup`
+export GHCUP_HOME="$XDG_DATA_HOME/ghcup"
+
+# set default directory to store `ghc`
+export GHC_HOME="$GHCUP_HOME/ghc/9.4.8"
+
+##################################################
 #               Rust Configuration               #
 ##################################################
 
 # sets default directory to store `rustup`
-export RUSTUP_HOME="$XDG_DATA_HOME/rust/rustup"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 
 # sets default directory to store `cargo`
-export CARGO_HOME="$XDG_DATA_HOME/rust/cargo"
-
-# sources `rust` enviornment
-source "$CARGO_HOME/env"
+export CARGO_HOME="$RUSTUP_HOME/cargo"
 
 ##################################################
 #       Node Version Manager Configuration       #
@@ -134,5 +144,6 @@ PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinter
 # secondary paths
 PATH="/opt/homebrew/opt/fzf/bin:$PATH"                              # fzf path
 PATH="/opt/homebrew/Caskroom/miniconda/base/condabin:$PATH"         # conda path
-PATH="/Users/brycekwon/.local/share/rust/cargo/bin:$PATH"           # rust path
+PATH="$CARGO_HOME/bin:$PATH"                                        # rust path
+PATH="$GHC_HOME/bin:$PATH"                                          # ghc path
 

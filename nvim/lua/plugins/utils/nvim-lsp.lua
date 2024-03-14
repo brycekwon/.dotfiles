@@ -89,6 +89,7 @@ return {
                 "jsonls",
                 "bashls",
                 "lua_ls",
+                "hls",
             },
         })
 
@@ -178,6 +179,10 @@ return {
                     },
                 },
             },
+        })
+
+        lspconfig["hls"].setup({
+            capabilities = lsp_capabilities,
         })
     end
 }
