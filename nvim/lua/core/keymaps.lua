@@ -20,12 +20,6 @@ keymap.set("n", "'", "}")       -- remap "jump to next paragraph"
 keymap.set("v", ";", "{")       -- remap "jump to previous paragraph"
 keymap.set("v", "'", "}")       -- remap "jump to next paragraph"
 
-keymap.set("n", "<leader>qq", ":q<CR>")     -- map "quit"
-keymap.set("n", "<leader>ww", ":w<CR>")     -- map "save"
-keymap.set("n", "<leader>wa", ":wa<CR>")    -- map "save all"
-keymap.set("n", "<leader>qa", ":qa<CR>")    -- map "quit all"
-keymap.set("n", "<leader>qw", ":wq<CR>")    -- map "save and quit"
-
 keymap.set("n", "<leader>s=", ":sp<CR>")        -- map "horizontal split window"
 keymap.set("n", "<leader>s-", ":vsp<CR>")       -- map "vertical split window"
 keymap.set("n", "<leader>sx", ":close<CR>")     -- map "close current window"
