@@ -43,8 +43,8 @@ unset HISTFILE
 #                  Tmux Aliases                  #
 ##################################################
 
+alias home="tmux new-session -A -s home"
 alias to="tmux -2 new -s "
-alias tk="tmux -2 kill-session -t "
 alias ta="tmux -2 attach -t "
 alias td="tmux -2 detach"
 alias tl="tmux -2 ls"
@@ -60,3 +60,11 @@ alias oo="open ./"
 
 alias nf="neofetch"
 alias of="onefetch"
+
+alias encrypt="gpg -c"
+alias decrypt="gpg -d"
+
+alias verify="gpg --verify"
+alias sign="gpg -s"
+alias clearsign="gpg --clear-sign"
+
