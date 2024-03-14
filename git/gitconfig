@@ -48,5 +48,4 @@
     save = "stash save"
     use = "stash apply"
     lg = "log --color --graph --pretty=format:'%Cred%h%Creset %C(green)%cr %C(bold blue)[%an]%Creset %C(yellow)%s%Creset%(decorate)'"
-    ; lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
     gr = "log --color --graph --pretty=format:'%Cred%H%Creset %C(green)(%cr)%Creset%(decorate)%nAuthor: %C(bold blue)%an <%ae> %C(cyan)%ai%nCommit: %C(bold blue)%cn <%ce> %C(cyan)%ci%n%n%Creset%C(yellow)%s%Creset%n%n%b%n'"
