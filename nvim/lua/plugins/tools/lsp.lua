@@ -1,44 +1,53 @@
 return {
-    "neovim/nvim-lspconfig",
+    'neovim/nvim-lspconfig',
     dependencies = {
         {
-            "hrsh7th/nvim-cmp",
+            'hrsh7th/nvim-cmp',
             dependencies = {
-                "hrsh7th/cmp-path",
-                "hrsh7th/cmp-buffer",
-                "hrsh7th/cmp-nvim-lsp",
+                {
+                    'hrsh7th/cmp-path',
+                    name = 'cmp-path',
+                },
+                {
+                    'hrsh7th/cmp-buffer',
+                    name = 'cmp-buffer',
+                },
+                {
+                    'hrsh7th/cmp-nvim-lsp',
+                    name = 'cmp-lsp',
+                },
             },
+            name = 'cmp'
         },
         {
-            "L3MON4D3/LuaSnip",
-            name = "luasnip",
+            'L3MON4D3/LuaSnip',
+            name = 'luasnip',
         },
         {
-            "onsails/lspkind.nvim",
-            name = "lspkind",
+            'onsails/lspkind.nvim',
+            name = 'lspkind',
         },
         {
-            "williamboman/mason.nvim",
-            name = "mason",
+            'williamboman/mason.nvim',
+            name = 'mason',
         },
         {
-            "williamboman/mason-lspconfig.nvim",
-            name = "mason-lspconfig",
+            'williamboman/mason-lspconfig.nvim',
+            name = 'mason-lspconfig',
         },
     },
-    name = "nvim-lspconfig",
+    name = 'lspconfig',
     config = function(_, _)
-        local lspconfig = require("lspconfig")
+        local lspconfig = require('lspconfig')
         local luasnip = require('luasnip')
-        local lspkind = require("lspkind")
-        local cmp = require("cmp")
+        local lspkind = require('lspkind')
+        local cmp = require('cmp')
 
         require('luasnip.loaders.from_vscode').lazy_load()
 
         vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
-        vim.api.nvim_create_autocmd("LspAttach", {
-            desc = "LSP Actions",
+        vim.api.nvim_create_autocmd('LspAttach', {
             callback = function()
                 local bufmap = function(mode, lhs, rhs)
                     local opts = { buffer = true }
@@ -71,36 +80,21 @@ return {
             end
         })
 
-        local signs = { Error = " ", Warn = " ", Hint = "ﴞ ", Info = " " }
+        local signs = { Error = ' ', Warn = ' ', Hint = 'ﴞ ', Info = ' ' }
         for type, icon in pairs(signs) do
-            local hl = "DiagnosticSign" .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+            local hl = 'DiagnosticSign' .. type
+            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
         end
-
-        require('mason').setup()
-        require('mason-lspconfig').setup({
-            ensure_installed = {
-                "clangd",
-                "pylsp",
-                "rust_analyzer",
-                "tsserver",
-                "html",
-                "cssls",
-                "jsonls",
-                "bashls",
-                "lua_ls",
-                "hls",
-            },
-        })
 
         cmp.setup({
             snippet = {
                 expand = function(args)
                     luasnip.lsp_expand(args.body)
-                end
+                end,
             },
             sources = {
                 { name = 'path' },
+                { name = 'copilot', group_index = 2 },
                 { name = 'nvim_lsp', keyword_length = 1 },
                 { name = 'buffer', keyword_length = 3 },
                 { name = 'luasnip', keyword_length = 2 },
@@ -112,77 +106,103 @@ return {
                 fields = {'menu', 'abbr', 'kind'},
                 format = lspkind.cmp_format({
                     maxwdith = 50,
-                    ellipsis_char = "...",
+                    ellipsis_char = '...',
+                    symbol_map = { Copilot = '' },
                 }),
             },
             mapping = cmp.mapping.preset.insert({
-                ["<C-,>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-                ["<C-.>"] = cmp.mapping.select_next_item(), -- next suggestion
-                ["<C-k>"] = cmp.mapping.scroll_docs(-4),
-                ["<C-j>"] = cmp.mapping.scroll_docs(4),
-                ["<C-w>"] = cmp.mapping.complete(), -- show completion suggestions
-                ["<C-q>"] = cmp.mapping.abort(), -- close completion window
-                ["<CR>"] = cmp.mapping.confirm({ select = false }),
+                ['<C-,>'] = cmp.mapping.select_prev_item(), -- previous suggestion
+                ['<C-.>'] = cmp.mapping.select_next_item(), -- next suggestion
+                ['<C-k>'] = cmp.mapping.scroll_docs(-4),
+                ['<C-j>'] = cmp.mapping.scroll_docs(4),
+                ['<C-w>'] = cmp.mapping.complete(), -- show completion suggestions
+                ['<C-q>'] = cmp.mapping.abort(), -- close completion window
+                ['<CR>'] = cmp.mapping.confirm({ select = false }),
             }),
         })
 
-        local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+        require('mason').setup()
+        require('mason-lspconfig').setup({
+            ensure_installed = {
+                'clangd',
+                'pylsp',
+                'rust_analyzer',
+                'tsserver',
+                'html',
+                'cssls',
+                'jsonls',
+                'bashls',
+                'lua_ls',
+            },
+        })
 
-        lspconfig["clangd"].setup({
+        local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+        lspconfig['clangd'].setup({
             capabilities = lsp_capabilities,
         })
 
-        lspconfig["pylsp"].setup({
+        lspconfig['pylsp'].setup({
             capabilities = lsp_capabilities,
         })
 
-        lspconfig["rust_analyzer"].setup({
+        lspconfig['rust_analyzer'].setup({
             capabilities = lsp_capabilities,
         })
 
-        lspconfig["tsserver"].setup({
+        lspconfig['tsserver'].setup({
             capabilities = lsp_capabilities,
         })
 
-        lspconfig["html"].setup({
+        lspconfig['html'].setup({
             capabilities = lsp_capabilities,
         })
 
-        lspconfig["cssls"].setup({
+        lspconfig['cssls'].setup({
             capabilities = lsp_capabilities,
         })
 
-        lspconfig["jsonls"].setup({
+        lspconfig['jsonls'].setup({
             capabilities = lsp_capabilities,
         })
 
-        lspconfig["bashls"].setup({
+        lspconfig['bashls'].setup({
             capabilities = lsp_capabilities,
         })
 
-        lspconfig["lua_ls"].setup({
+        lspconfig['lua_ls'].setup({
             capabilities = lsp_capabilities,
             settings = {
                 Lua = {
-                    -- make the language server recognize "vim" global
+                    -- make the language server recognize 'vim' global
                     diagnostics = {
                         globals = {
-                            "vim"
+                            'vim'
                         },
                     },
                     workspace = {
                         -- make language server aware of runtime files
                         library = {
-                            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                            [vim.fn.stdpath("config") .. "/lua"] = true,
+                            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                            [vim.fn.stdpath('config') .. '/lua'] = true,
                         },
                     },
                 },
             },
         })
-
-        lspconfig["hls"].setup({
-            capabilities = lsp_capabilities,
-        })
-    end
+    end,
+    ft = {
+        "c",
+        "cpp",
+        "python",
+        "rust",
+        "javascript",
+        "markdown",
+        "html",
+        "css",
+        "json",
+        "sh",
+        "lua",
+    }
 }
+

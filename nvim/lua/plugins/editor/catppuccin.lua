@@ -1,6 +1,6 @@
 return {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    'catppuccin/nvim',
+    name = 'catppuccin',
     opts = {
         integration = {
             nvimtree = true,
@@ -10,3 +10,4 @@ return {
     lazy = false,
     priority = 1000,
 }
+

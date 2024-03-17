@@ -1,15 +1,15 @@
 return {
-    "nvim-lualine/lualine.nvim",
+    'nvim-lualine/lualine.nvim',
     dependencies = {
         {
-            "nvim-tree/nvim-web-devicons",
-            name = "nvim-web-devicons"
+            'nvim-tree/nvim-web-devicons',
+            name = 'web-devicons',
         },
     },
-    name = "lualine",
+    name = 'lualine',
     opts = {
         options = {
-            theme = "catppuccin",
+            theme = 'catppuccin',
         },
     },
 }

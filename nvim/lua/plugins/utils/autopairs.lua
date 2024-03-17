@@ -3,10 +3,10 @@ return {
     dependencies = {
         {
             "windwp/nvim-ts-autotag",
-            name = "nvim-ts-autotag",
+            name = "ts-autotag",
         }
     },
-    name = "nvim-autopairs",
+    name = "autopairs",
     opts = {
         check_ts = true,
         ts_config = {
@@ -18,5 +18,6 @@ return {
             },
         },
     },
+    event = "BufRead",
 }
 
