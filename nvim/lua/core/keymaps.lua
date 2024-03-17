@@ -14,7 +14,6 @@ keymap.set('n', 'd', '"_d')
 keymap.set('v', 'd', '"_d')
 
 keymap.set('n', 'dd', '"_dd')
---[[ keymap.set('v', 'dd', '"_dd') ]]
 
 keymap.set('n', 'D', '"_D')
 keymap.set('v', 'D', '"_D')

@@ -1,23 +1,23 @@
 return {
-    "windwp/nvim-autopairs",
+    'windwp/nvim-autopairs',
     dependencies = {
         {
-            "windwp/nvim-ts-autotag",
-            name = "ts-autotag",
+            'windwp/nvim-ts-autotag',
+            name = 'ts-autotag',
         }
     },
-    name = "autopairs",
+    name = 'autopairs',
     opts = {
         check_ts = true,
         ts_config = {
             lua = {
-                "string"
+                'string'
             },
             javascript = {
-                "template_string"
+                'template_string'
             },
         },
     },
-    event = "BufRead",
+    event = 'BufRead',
 }
 
