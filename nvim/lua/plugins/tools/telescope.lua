@@ -13,6 +13,17 @@ return {
     },
     name = 'telescope',
     opts = {
+        defaults = {
+            file_ignore_patterns = {
+                "%.png",
+                "%.jpg",
+                "%.webp",
+                "%.gif",
+                "%.pdf",
+                "%.odt",
+                "%.docx",
+            },
+        },
         extensions = {
             fzf = {
                 fuzzy = true,
@@ -32,7 +43,6 @@ return {
         { '<leader>ff', '<CMD>Telescope find_files<CR>', mode='n' },
         { '<leader>fg', '<CMD>Telescope live_grep<CR>', mode='n' },
         { '<leader>gb', '<CMD>Telescope git_branches<CR>', mode='n' },
-        { '<leader>tn', '<CMD>Telescope notify<CR>', mode='n' },
     },
     cmd = { 'Telescope' },
 }
