@@ -14,6 +14,7 @@
     pager = "less -XRF"
     editor = "nvim"
     whitespace="fix,trailing-space,cr-at-eol"
+    excludesfile = "~/.config/git/gitignore"
 [init]
     defaultbranch = "main"
 [commit]
