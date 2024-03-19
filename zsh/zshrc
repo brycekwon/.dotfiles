@@ -44,22 +44,10 @@ unset HISTFILE
 ##################################################
 
 alias home="tmux new-session -A -s home"
-alias to="tmux -2 new -s "
-alias ta="tmux -2 attach -t "
-alias td="tmux -2 detach"
-alias tl="tmux -2 ls"
 
 ##################################################
-#                Utility Aliases                 #
+#                   GPG Aliases                  #
 ##################################################
-
-alias so="source"
-alias cl="clear"
-alias nv="nvim"
-alias oo="open ./"
-
-alias nf="neofetch"
-alias of="onefetch"
 
 alias encrypt="gpg -c"
 alias decrypt="gpg -d"
@@ -68,3 +56,24 @@ alias verify="gpg --verify"
 alias sign="gpg -s"
 alias clearsign="gpg --clear-sign"
 
+##################################################
+#                  Code Aliases                  #
+##################################################
+
+alias of="onefetch"
+
+alias nv="nvim"
+alias code="codium --user-data-dir ${XDG_STATE_HOME}/vscodium --extensions-dir ${XDG_STATE_HOME}/vscodium/extensions"
+
+##################################################
+#                Utility Aliases                 #
+##################################################
+
+alias so="source"
+alias cl="clear"
+alias oo="open ./"
+alias coffee="caffeinate -disu"
+
+alias nf="neofetch"
+
+alias song='FILE=$(fd --type f . ~/Music | fzf); if [ -z "$FILE" ]; then echo "No file selected."; else open -a IINA "$FILE"; fi'
