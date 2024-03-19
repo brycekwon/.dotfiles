@@ -33,10 +33,9 @@ return {
             },
             auto_install = true,
             indent = {
-              enable = true,
+                enable = true,
             },
+            additional_vim_regex_highlighting = false
         })
     end,
-    -- event = 'BufRead',
-    -- cmd = { 'TSUpdate', 'TSInstall', 'TSInstallInfo' },
 }

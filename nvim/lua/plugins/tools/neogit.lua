@@ -19,9 +19,9 @@ return {
     end,
     keys = {
         { '<leader>gs', function() require('neogit').open() end, mode='n', silent=true, noremap=true },
-        { '<leader>gc', ':Neogit commit<CR>', mode='n' , silent=true, noremap=true },
-        { '<leader>gp', ':Neogit pull<CR>', mode='n' , silent=true, noremap=true },
-        { '<leader>gP', ':Neogit push<CR>', mode='n' , silent=true, noremap=true },
+        { '<leader>gc', '<CMD>Neogit commit<CR>', mode='n' , silent=true, noremap=true },
+        { '<leader>gp', '<CMD>Neogit pull<CR>', mode='n' , silent=true, noremap=true },
+        { '<leader>gP', '<CMD>Neogit push<CR>', mode='n' , silent=true, noremap=true },
     },
 }
 
