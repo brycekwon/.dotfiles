@@ -9,6 +9,10 @@
 /* disable check for default browser */
 user_pref("browser.shell.checkDefaultBrowser", false);
 
+user_pref("browser.startup.page", 1);
+user_pref("browser.startup.homepage", "about:home");
+user_pref("browser.newtabpage.enabled", true);
+
 /* disable pocket */
 user_pref("extensions.pocket.enabled", false);
 
