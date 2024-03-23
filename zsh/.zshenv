@@ -64,6 +64,8 @@ _fzf_compgen_dir() {
 
 source "$HOMEBREW_CELLAR/fzf/0.48.1/shell/completion.zsh"
 
+export GIT_CONFIG_NOSYSTEM=true
+export GIT_CONFIG_GLOBAL="$XDG_CONFIG_HOME/git/gitconfig"
 
 ################################################################################
 #                             PROGRAMMING LANGUAGE                             #
