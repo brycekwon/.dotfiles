@@ -4,8 +4,6 @@ alias of="onefetch"
 alias nv="nvim"
 alias vs="codium --user-data-dir ${XDG_STATE_HOME}/vscodium --extensions-dir ${XDG_STATE_HOME}/vscodium/extensions"
 
-alias _='sudo '
-
 alias lsa='ls -lah'
 alias l='ls -lah'
 alias ll='ls -lh'

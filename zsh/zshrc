@@ -24,8 +24,8 @@ bindkey -M viins '^[[1;5D' backward-word
 bindkey -M vicmd '^[[1;5D' backward-word
 
 # setting up history options
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 HISTFILE="$XDG_CACHE_HOME/zsh/history"
 
 

@@ -137,5 +137,6 @@ PATH="/opt/homebrew/sbin:$PATH"
 PATH="$HOMEBREW_REPOSITORY/opt/fzf/bin:$PATH"
 PATH="$HOMEBREW_REPOSITORY/Caskroom/miniconda/base/condabin:$PATH"
 
+PATH="$NVM_BIN:$PATH"
 PATH="$CARGO_HOME/bin:$PATH"
 PATH="$GHC_HOME/bin:$PATH"
