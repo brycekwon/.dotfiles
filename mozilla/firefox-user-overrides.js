@@ -55,3 +55,4 @@ user_pref("browser.urlbar.suggest.engines", false);
 
 /* set the default DNS setting to max */
 user_pref("network.trr.mode", 3);
+user_pref("network.trr.custom_uri", "https://base.dns.mullvad.net/dns-query");
