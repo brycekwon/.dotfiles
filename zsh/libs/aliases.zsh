@@ -27,3 +27,4 @@ alias oo="open ./"
 alias coffee="caffeinate -disu"
 
 alias tm="tmux new-session -A -s home"
+alias ghci="ghci -fno-ghci-history"
