@@ -1,0 +1,17 @@
+# display statistics of zsh command history
+function zsh_stats() {
+  fc -l 1 \
+    | awk '{ CMD[$2]++; count++; } END { for (a in CMD) print CMD[a] " " CMD[a]*100/count "% " a }' \
+    | grep -v "./" | sort -nr | head -n 20 | column -c3 -s " " -t | nl
+}
+
+# select song from library
+function song() {
+  FILE=$(fd --type f . "$HOME/Music" | fzf)
+  if [ -z "$FILE" ]; then
+    echo "No file selected"
+  else
+    open -a IINA "$FILE"
+  fi
+}
+

@@ -1,30 +1,23 @@
 ################################################################################
-# File: .dotfiles/zsh/zprofile
+# File: .dotfiles/zsh/zshenv
 # Author: Bryce Kwon
-# Date: 2024-03-12
-# Version: 1.0.0
+# Date: 2024-03-22
+# Version: 2.0.0
 ################################################################################
 
-
-################################################################################
-#                               GENERAL SETTINGS                               #
-################################################################################
 
 ##################################################
-#              XDG Base Directories              #
+#                 XDG Directories                #
 ##################################################
 
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
 
 ##################################################
-#                Session History                 #
+#           ZSH Environment Variables            #
 ##################################################
-
-# disables command history for all shell sessions
-export SHELL_SESSIONS_DISABLE=1
 
 # disables search history for `less`
 export LESSHISTFILE=-
@@ -34,8 +27,11 @@ export LESSHISTFILE=-
 ##################################################
 
 # sources the `homebrew` environment
-eval "$(/opt/homebrew/bin/brew shellenv)"
+export HOMEBREW_PREFIX="/opt/homebrew";
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+export HOMEBREW_REPOSITORY="/opt/homebrew";
 
+# configures `homebrew` options
 export HOMEBREW_NO_ENV_HINTS=false
 
 ##################################################
@@ -49,11 +45,13 @@ export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/
 #               FZF Configuration                #
 ##################################################
 
-# set fzf default command
+# sets fzf default command
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
 --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+
+# sets default stdout command for FZF
 export FZF_DEFAULT_COMMAND="fd --hidden . $1"
 
 _fzf_compgen_path() {
@@ -64,16 +62,7 @@ _fzf_compgen_dir() {
   fd --type d --hidden . "$1"
 }
 
-# auto-completion
-source "/opt/homebrew/opt/fzf/shell/completion.zsh"
-
-
-##################################################
-#               NPM Configuration                #
-##################################################
-
-# set npm cache location
-export npm_config_cache="$XDG_CACHE_HOME/npm"
+source "$HOMEBREW_CELLAR/fzf/0.48.1/shell/completion.zsh"
 
 
 ################################################################################
@@ -104,7 +93,7 @@ export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 export CARGO_HOME="$RUSTUP_HOME/cargo"
 
 ##################################################
-#       Node Version Manager Configuration       #
+#              Node Configuration               #
 ##################################################
 
 # sets default directory to store `nvm`
@@ -112,6 +101,9 @@ export NVM_DIR="$XDG_DATA_HOME/nvm"
 
 # sources `nvm` enviornment
 source "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
+
+# set npm cache location
+export npm_config_cache="$XDG_CACHE_HOME/npm"
 
 ##################################################
 #              Python Configuration              #
@@ -122,38 +114,26 @@ export IPYTHONDIR="$XDG_STATE_HOME/jupyter/ipython"
 export MPLCONFIGDIR="$XDG_STATE_HOME/matplotlib"
 
 export CONDA_AUTO_ACTIVATE_BASE=false
-__conda_setup="$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/homebrew/Caskroom/miniconda/base/bin:$PATH"
-    fi
-fi
-unset __conda_setup
 
+eval "$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+
+unset _CE_CONDA
+unset _CE_M
 
 ################################################################################
 #                                PATH SETTINGS                                 #
 ################################################################################
 
-# primary paths
-PATH="/usr/bin"
-PATH="/usr/sbin:$PATH"
-PATH="/bin:$PATH"
+PATH="/bin"
 PATH="/sbin:$PATH"
+PATH="/usr/bin:$PATH"
+PATH="/usr/sbin:$PATH"
 PATH="/usr/local/bin:$PATH"
 PATH="/opt/homebrew/bin:$PATH"
 PATH="/opt/homebrew/sbin:$PATH"
-PATH="/System/Cryptexes/App/usr/bin:$PATH"
-PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:$PATH"
-PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:$PATH"
-PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:$PATH"
 
-# secondary paths
-PATH="/opt/homebrew/opt/fzf/bin:$PATH"                              # fzf path
-PATH="/opt/homebrew/Caskroom/miniconda/base/condabin:$PATH"         # conda path
-PATH="$CARGO_HOME/bin:$PATH"                                        # rust path
-PATH="$GHC_HOME/bin:$PATH"                                          # ghc path
+PATH="$HOMEBREW_REPOSITORY/opt/fzf/bin:$PATH"
+PATH="$HOMEBREW_REPOSITORY/Caskroom/miniconda/base/condabin:$PATH"
+
+PATH="$CARGO_HOME/bin:$PATH"
+PATH="$GHC_HOME/bin:$PATH"
