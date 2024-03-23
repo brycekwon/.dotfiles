@@ -54,9 +54,9 @@ return {
             sorter = 'case_sensitive',
         },
     },
-    keys = {
-        { '<leader>e', '<CMD>NvimTreeToggle<CR>', mode='n', desc='toggle filetree menu' },
-        { '<leader>e', '<CMD>NvimTreeToggle<CR>', mode='v', desc='toggle filetree menu' },
-    },
+    config = function(_, opts)
+        require('nvim-tree').setup(opts)
+        vim.keymap.set({'n', 'v'}, '<leader>e', '<CMD>NvimTreeToggle<CR>')
+    end,
 }
 
