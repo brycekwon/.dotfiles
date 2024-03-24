@@ -7,11 +7,33 @@ function zsh_stats() {
 
 # select song from library
 function song() {
-  FILE=$(fd --type f . "$HOME/Music" | fzf)
+  SONG=$(fd --type f . "$HOME/Music" | fzf)
+  if [ -z "$SONG" ]; then
+    echo "No song selected"
+  else
+    open -a IINA "$SONG"
+  fi
+}
+
+function album() {
+  ALBUM=$(fd -e "flac" --type f . "$HOME/Music" --exec dirname {} | sort -u | grep -v " - Single" | fzf)
+  if [ -z "$ALBUM" ]; then
+    echo "No album selected"
+  else
+    open -a IINA "$ALBUM"
+  fi
+}
+
+
+function app() {
+  FILE=$((ls /Applications && ls ~/Applications) | fzf)
   if [ -z "$FILE" ]; then
     echo "No file selected"
   else
-    open -a IINA "$FILE"
+    open -a "$FILE"
   fi
 }
+
+
+
 
