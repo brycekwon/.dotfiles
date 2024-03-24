@@ -1,52 +1,10 @@
-# # Sets color variable such as $fg, $bg, $color and $reset_color
+# load color module and enable colors
 autoload -U colors && colors
 
-# Expand variables and commands in PROMPT variables
-setopt prompt_subst
-
-if command diff --color /dev/null{,} &>/dev/null; then
-  function diff {
-    command diff --color "$@"
-  }
-fi
-
-if [[ -z "$LS_COLORS" ]]; then
-  if (( $+commands[dircolors] )); then
-    [[ -f "$HOME/.dircolors" ]] \
-      && source <(dircolors -b "$HOME/.dircolors") \
-      || source <(dircolors -b)
-  else
-    export LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
-  fi
-fi
-
-function test-ls-args {
-  local cmd="$1"          # ls, gls, colorls, ...
-  local args="${@[2,-1]}" # arguments except the first one
-  command "$cmd" "$args" /dev/null &>/dev/null
+function diff {
+  command diff --color "$@"
 }
 
-# Find the option for using colors in ls, depending on the version
-case "$OSTYPE" in
-  (darwin|freebsd)*)
-    # This alias works by default just using $LSCOLORS
-    test-ls-args ls -G && alias ls='ls -G'
-    # Only use GNU ls if installed and there are user defaults for $LS_COLORS,
-    # as the default coloring scheme is not very pretty
-    zstyle -t ':omz:lib:theme-and-appearance' gnu-ls \
-      && test-ls-args gls --color \
-      && alias ls='gls --color=tty'
-    ;;
-  *)
-    if test-ls-args ls --color; then
-      alias ls='ls --color=tty'
-    elif test-ls-args ls -G; then
-      alias ls='ls -G'
-    fi
-    ;;
-esac
+export LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
 
-unfunction test-ls-args
-
-[[ -z "$LS_COLORS" ]] || zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
