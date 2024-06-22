@@ -73,7 +73,7 @@ _fzf_compgen_file() {
 
 _fzf_comprun() {
     local command=$1
-        shift
+    shift
 
     case "$command" in
         cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
@@ -123,6 +123,56 @@ function open() {
     fi
 }
 
+# start wireguard vpn connection
+function wireguard-start() {
+    # ensure sudo access before continuing
+    if ! sudo -v; then
+        echo "must be sudo to use this command"
+        return 1
+    fi
+
+    # search for available configuration files
+    config_path="/opt/homebrew/etc/wireguard"
+    interface=$(sudo ls $config_path | grep ".conf" | cut -f 1 -d '.' | fzf \
+        --preview "sudo bat -n --color=always $config_path/{}.conf" "$@")
+
+    # handle error in selecting interface
+    if [ -z $interface ]; then
+        echo "no interface selected"
+        return 0
+    fi
+
+    wg-quick up $(basename $interface)
+
+    # revoke sudo access
+    sudo -k
+}
+
+# stop wireguard vpn connection
+function wireguard-stop() {
+    # ensure sudo access before continuing
+    if ! sudo -v; then
+        echo "must be sudo to use this command"
+        return 1
+    fi
+
+    # search for running wireguard connections
+    config_path="/var/run/wireguard"
+    interface=$(sudo ls $config_path | grep ".name" | cut -f 1 -d '.' | fzf \
+        --preview "sudo bat -n --color=always $config_path/{}.name" "$@")
+
+    # handle error in selecting interface
+    if [ -z $interface ]; then
+        echo "no interface selected"
+        return 0
+    fi
+
+    wg-quick down $(basename $interface)
+
+    # revoke sudo access
+    sudo -k
+}
+
 
 ################################################################################
 #                             Configure ZSH Aliases                            #
@@ -151,9 +201,12 @@ alias -g ....="cd ../../.."
 alias th="tmux -2 new-session -A -s home"
 alias coffee="caffeinate -disu"
 alias leaks="leaks -noContent -atExit --"
+alias net="curl -sS https://am.i.mullvad.net/json | jq"
 
 alias top="btop"
 alias ff="fastfetch"
+alias up="wireguard-start"
+alias down="wireguard-stop"
 
 alias update="brew update; brew upgrade; zit-upgrade; pipx upgrade-all"
 
