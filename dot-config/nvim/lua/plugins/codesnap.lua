@@ -13,4 +13,5 @@ return {
 
         vim.keymap.set({'x'}, '<leader>cc', '<CMD>CodeSnapSave<CR>', { noremap=true, silent=true } )
     end,
+    event = "VeryLazy",
 }

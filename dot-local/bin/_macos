@@ -15,6 +15,7 @@ launchctl config system umask 027
 # Keep-alive: update existing `sudo` time stamp until `.macos` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+
 ###############################################################################
 # General UI/UX                                                               #
 ###############################################################################
@@ -32,14 +33,8 @@ sudo nvram SystemAudioVolume=" "
 # Possible values: `WhenScrolling`, `Automatic` and `Always`
 defaults write NSGlobalDomain AppleShowScrollBars -string "WhenScrolling"
 
-# Save to disk (not to iCloud) by default
-defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
-
 # Automatically quit printer app once the print jobs complete
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
-
-# Disable the “Are you sure you want to open this application?” dialog
-defaults write com.apple.LaunchServices LSQuarantine -bool false
 
 # Disable the crash reporter
 defaults write com.apple.CrashReporter DialogType -string "none"
@@ -59,6 +54,7 @@ defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 # Disable auto-correct
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
+
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
 ###############################################################################
@@ -66,6 +62,7 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 # Set a blazingly fast keyboard repeat rate
 defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write NSGlobalDomain InitialKeyRepeat -int 25
+
 
 ###############################################################################
 # Screen                                                                      #
@@ -75,21 +72,6 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 25
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
-# Save screenshots to the desktop
-defaults write com.apple.screencapture location -string "${HOME}/Desktop"
-
-# Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
-defaults write com.apple.screencapture type -string "png"
-
-# Disable shadow in screenshots
-defaults write com.apple.screencapture disable-shadow -bool true
-
-# Enable subpixel font rendering on non-Apple LCDs
-# Reference: https://github.com/kevinSuttle/macOS-Defaults/issues/17#issuecomment-266633501
-defaults write NSGlobalDomain AppleFontSmoothing -int 1
-
-# Enable HiDPI display modes (requires restart)
-sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
 
 ###############################################################################
 # Finder                                                                      #
@@ -147,12 +129,19 @@ defaults write com.apple.finder WarnOnEmptyTrash -bool true
 # Show the /Volumes folder
 sudo chflags nohidden /Volumes
 
+# show file/folder icon in title bar
+defaults write com.apple.universalaccess "showWindowTitlebarIcons" -bool "true"
+
+# Empty trash after 30 days
+defaults write com.apple.finder "FXRemoveOldTrashItems" -bool "true"
+
+
 ###############################################################################
 # Dock, Dashboard, and hot corners                                            #
 ###############################################################################
 
 # Set the icon size of Dock items to 36 pixels
-defaults write com.apple.dock tilesize -int 40
+defaults write com.apple.dock tilesize -int 36
 
 # Enable spring loading for all Dock items
 defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
@@ -162,6 +151,60 @@ defaults write com.apple.dock show-process-indicators -bool true
 
 # Don’t automatically rearrange Spaces based on most recent use
 defaults write com.apple.dock mru-spaces -bool false
+
+# lock dock to bottom position
+defaults write com.apple.dock "orientation" -string "bottom"
+defaults write com.apple.Dock position-immutable -bool true
+
+# lock dock icon sizes
+defaults write com.apple.Dock size-immutable -bool true
+
+# autohide dock immediately
+defaults write com.apple.dock "autohide" -bool "true"
+defaults write com.apple.dock "autohide-delay" -float "0"
+
+# do not show recents
+defaults write com.apple.dock "show-recents" -bool "false"
+
+# set dock minimization to genie
+defaults write com.apple.dock "mineffect" -string "genie"
+
+# enable Exposé (scroll on icon to show window)
+defaults write com.apple.dock "scroll-to-open" -bool "true"
+
+
+###############################################################################
+# Menu Bar                                                                    #
+###############################################################################
+
+# set clock format
+defaults write com.apple.menuextra.clock "DateFormat" -string "\"EEE d MMM HH:mm:ss\""
+
+
+###############################################################################
+# Mouse and Trackpad                                                          #
+###############################################################################
+
+# set mouse scaling
+defaults write NSGlobalDomain com.apple.mouse.scaling -float "1.5"
+
+# set weight
+defaults write com.apple.AppleMultitouchTrackpad "FirstClickThreshold" -int "0"
+
+
+###############################################################################
+# Mission Control                                                             #
+###############################################################################
+
+# do not rearrange automatically
+defaults write com.apple.dock "mru-spaces" -bool "false"
+
+# group by application
+defaults write com.apple.dock "expose-group-apps" -bool "true"
+
+# Do not switch to a Space with open windows for the application.
+defaults write NSGlobalDomain "AppleSpacesSwitchOnActivate" -bool "false"
+
 
 ###############################################################################
 # Kill affected applications                                                  #

@@ -41,7 +41,7 @@ return {
                 { name = 'nvim_lsp', keyword_length = 2 },
                 { name = 'luasnip', keyword_length = 2 },
                 { name = 'buffer', keyword_length = 0, max_item_count = 0, is_buffer = false },
-                { name = 'path', keyword_length = 2 },
+                { name = 'path', keyword_length = 1 },
             },
             window = {
                 documentation = cmp.config.window.bordered(),

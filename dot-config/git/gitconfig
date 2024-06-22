@@ -21,6 +21,7 @@
     ai = "add"
     aa = "add --all"
     ci = "commit"
+    cs =  "commit -S"
     rr = "reset"
     br = "branch --all --verbose"
     bd = "branch --delete --verbose"

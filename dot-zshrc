@@ -76,52 +76,29 @@ _fzf_comprun() {
     shift
 
     case "$command" in
-        cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
         export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
         ssh)          fzf --preview 'dig {}'                   "$@" ;;
-        nv)           fzf --preview 'if [ -d {} ]; then tree -C {}; else bat -n --color=always {} | head -200; fi' "$@" ;;
-        oo)           fzf --preview 'if [ -d {} ]; then tree -C {}; elif [[ {} == *.pdf ]]; then pdftotext {} - | head -200; else bat -n --color=always {} | head -200; fi' "$@" ;;
+        cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
+        nv|oo)        fzf --preview 'if [ -d {} ]; then tree -C {}; else bat -n --color=always {} | head -200; fi' "$@" ;;
         *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
     esac
 }
 
 ##################################################
-#              Python Configuration              #
+#              Colima Configuration              #
 ##################################################
 
-# lazy load conda && get rid of annoying ~/.conda
-function conda() {
-    # check if the known environment variable is set
-    if [ -z "$CONDA_EXE" ]; then
-        eval "$($HOMEBREW_PREFIX/Caskroom/miniconda/base/bin/conda 'shell.zsh' 'hook' 2>/dev/null)"
-    fi
-
-    local cmd="${1-__missing__}"
-    case "$cmd" in
-        (activate | deactivate) __conda_activate "$@" ;;
-        (install | update | upgrade | remove | uninstall) 
-            __conda_exe "$@" || return
-            __conda_reactivate ;;
-        (*) 
-            __conda_exe "$@" ;;
-    esac
-
-    # clean up unnecessary conda artifacts
-    rm -rf "$HOME/.conda"
-}
-
-##################################################
-#             Utilities Configuration            #
-##################################################
-
-# more versatile open command
-function open() {
-    if [ $# -eq 0 ]; then
-        command open ./
+function colima() {
+    if [[ $1 == "start" ]]; then
+        command colima --ssh-config=false "$@"
     else
-        command open "$@"
+        command colima "$@"
     fi
 }
+
+##################################################
+#             Wireguard Configuration            #
+##################################################
 
 # start wireguard vpn connection
 function wireguard-start() {
@@ -173,6 +150,44 @@ function wireguard-stop() {
     sudo -k
 }
 
+##################################################
+#              Python Configuration              #
+##################################################
+
+# lazy load conda && get rid of annoying ~/.conda
+function conda() {
+    # check if the known environment variable is set
+    if [ -z "$CONDA_EXE" ]; then
+        eval "$($HOMEBREW_PREFIX/Caskroom/miniconda/base/bin/conda 'shell.zsh' 'hook' 2>/dev/null)"
+    fi
+
+    local cmd="${1-__missing__}"
+    case "$cmd" in
+        (activate | deactivate) __conda_activate "$@" ;;
+        (install | update | upgrade | remove | uninstall) 
+            __conda_exe "$@" || return
+            __conda_reactivate ;;
+        (*) 
+            __conda_exe "$@" ;;
+    esac
+
+    # clean up unnecessary conda artifacts
+    rm -rf "$HOME/.conda"
+}
+
+##################################################
+#             Utilities Configuration            #
+##################################################
+
+# more versatile open command
+function open() {
+    if [ $# -eq 0 ]; then
+        command open ./
+    else
+        command open "$@"
+    fi
+}
+
 
 ################################################################################
 #                             Configure ZSH Aliases                            #
@@ -198,17 +213,18 @@ alias -g ..="cd ../"
 alias -g ...="cd ../.."
 alias -g ....="cd ../../.."
 
-alias th="tmux -2 new-session -A -s home"
 alias coffee="caffeinate -disu"
 alias leaks="leaks -noContent -atExit --"
-alias net="curl -sS https://am.i.mullvad.net/json | jq"
 
+alias net="curl -sS https://am.i.mullvad.net/json | jq"
+alias th="tmux -2 new-session -A -s home"
 alias top="btop"
 alias ff="fastfetch"
 alias up="wireguard-start"
 alias down="wireguard-stop"
 
 alias update="brew update; brew upgrade; zit-upgrade; pipx upgrade-all"
+
 
 ################################################################################
 #                              Zit Plugin Manager                              #

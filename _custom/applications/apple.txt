@@ -1,10 +1,7 @@
 https://apps.apple.com/us/app/affinity-photo-2-image-editor/id1616822987
 https://apps.apple.com/us/app/affinity-designer-2/id1616831348
 https://apps.apple.com/us/app/affinity-publisher-2/id1606941598
-https://apps.apple.com/us/app/kiwix/id997079563
-https://apps.apple.com/us/app/bear-markdown-notes/id1091189122
 https://apps.apple.com/us/app/libreoffice/id1630474372
 https://apps.apple.com/us/app/utm-virtual-machines/id1538878817
 https://apps.apple.com/us/app/strongbox-password-manager/id897283731
 https://apps.apple.com/us/app/yubico-authenticator/id1497506650
-
